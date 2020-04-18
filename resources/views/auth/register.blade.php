@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-sm-6 offset-sm-3">
             
-            {!! From::open(['route' => 'signup.post']) !!}
+            {!! Form::open(['route' => 'signup.post']) !!}
                 <div class="form-group">
                     {!! Form::label('name','Name') !!}
                     {!! Form::text('name',old('name'),['class' => 'form-control']) !!}
@@ -21,7 +21,7 @@
                 
                 <div class="form-group">
                     {!! Form::label('password','Password') !!}
-                    {!! From::password('password',['class' => 'form-control']) !!}
+                    {!! Form::password('password',['class' => 'form-control']) !!}
                 </div>
                 
                 <div class="form-group">
