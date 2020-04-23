@@ -18,10 +18,9 @@ class TasksController extends Controller
     {
         $tasks = Task::all();
         
-        return view('tasks.index',[
-            'tasks' => $tasks,
-        ]);
+        return view('welcome',['tasks' => $tasks]);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -55,6 +54,7 @@ class TasksController extends Controller
         $task = new Task;
         $task->status = $request->status;
         $task->content = $request->content;
+        $task->user_id = \Auth::id();
         $task->save();
         
         return redirect('/');
@@ -110,7 +110,10 @@ class TasksController extends Controller
         $task = Task::find($id);
         $task->status = $request->status;
         $task->content = $request->content;
-        $task->save();
+        
+        if(\Auth::id() === $task->user_id){
+            $task->save();
+        }
         
         return redirect('/');
     }
@@ -124,8 +127,11 @@ class TasksController extends Controller
      // deleteでtasks/idにアクセスされた場合の「削除処理」
     public function destroy($id)
     {
-        $task = Task::find($id);
-        $task->delete();
+        $task = \App\Task::find($id);
+        
+        if(\Auth::id() === $task->user_id){
+            $task->delete();
+        }
         
         return redirect('/');
     }
